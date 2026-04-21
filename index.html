@@ -1,33 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RM Advanced Design Solutions</title>
+    <title>RM Magic Gallery</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #0b0e14; color: white; margin: 0; text-align: center; }
-        .header { padding: 80px 20px; background: linear-gradient(135deg, #1e3a8a, #0b0e14); }
-        h1 { font-size: 2.2rem; color: #60a5fa; margin: 0; }
-        #popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .popup-content { background: #1e293b; padding: 30px; border-radius: 20px; border: 2px solid #60a5fa; max-width: 80%; }
-        button { background: #60a5fa; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        body { font-family: 'Segoe UI', sans-serif; background: radial-gradient(circle, #1e3a8a, #0b0e14); color: white; margin: 0; min-height: 100vh; overflow-x: hidden; text-align: center; }
+        #permission-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+        .gate-box { background: #1e293b; padding: 40px; border-radius: 30px; border: 3px solid #60a5fa; box-shadow: 0 0 50px rgba(96, 165, 250, 0.5); max-width: 85%; }
+        .upload-section { margin: 30px auto; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 20px; width: 80%; border: 2px dashed #60a5fa; }
+        .custom-upload { background: #60a5fa; color: white; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; display: inline-block; margin-top: 10px; }
+        #gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; padding: 40px; }
+        .magic-frame { background: #ffd700; padding: 15px; border-radius: 10px; box-shadow: 10px 10px 20px rgba(0,0,0,0.5); transform: rotate(-2deg); }
+        .magic-frame img { width: 250px; height: 250px; object-fit: cover; border: 5px solid #fff; }
+        button { background: #3b82f6; color: white; border: none; padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div id="popup">
-        <div class="popup-content">
-            <h3>Welcome to RM Advanced</h3>
-            <p>Do you allow permission to view this 3D Portfolio?</p>
-            <button onclick="document.getElementById('popup').style.display='none'">Allow & Enter</button>
+    <div id="permission-gate">
+        <div class="gate-box">
+            <h2>RM Advanced Security</h2>
+            <p>এই ওয়েবসাইটে ঢোকার জন্য আপনার বিশেষ অনুমতি প্রয়োজন।</p>
+            <button onclick="document.getElementById('permission-gate').style.display='none'">হ্যাঁ, অনুমতি দিচ্ছি</button>
         </div>
     </div>
-    <div class="header">
-        <h1>RM Advanced Design Solutions</h1>
-        <p>Official Portfolio of Raihan Mondal</p>
+    <h1>RM Magic Photo Frame</h1>
+    <div class="upload-section">
+        <h3>আপনার গ্যালারি থেকে ফটো বেছে নিন</h3>
+        <label for="file-upload" class="custom-upload">ফটো সিলেক্ট করুন 📸</label>
+        <input id="file-upload" type="file" accept="image/*" style="display:none" onchange="previewImage(event)">
     </div>
-    <div style="padding: 50px;">
-        <h2>Innovative 3D Designs Coming Soon...</h2>
-        <p>Global Resources for Humanity</p>
-    </div>
+    <div id="gallery"></div>
+    <script>
+        function previewImage(event) {
+            const gallery = document.getElementById('gallery');
+            const reader = new FileReader();
+            reader.onload = function() {
+                const frame = document.createElement('div');
+                frame.className = 'magic-frame';
+                const img = document.createElement('img');
+                img.src = reader.result;
+                frame.appendChild(img);
+                gallery.appendChild(frame);
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
